@@ -1,0 +1,41 @@
+﻿<Window x:Class="BookStore.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        Title="Login" Height="450" Width="800" WindowStartupLocation="CenterScreen" Background="#FFFFD198">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Первоначальные элементы вверху -->
+            <RowDefinition Height="*"/>
+            <!-- Свободное пространство -->
+            <RowDefinition Height="Auto"/>
+            <!-- Центрированная форма -->
+            <RowDefinition Height="Auto"/>
+            <!-- Последующие элементы внизу -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <!-- Использовать весь экран -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Кнопка регистрации -->
+        <Button x:Name="RegButton" Content="Зарегистрироваться" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Height="25" Width="122" Click="RegButton_Click" Background="#FFE2CAAC"/>
+
+        <!-- Кнопка возврата на главную -->
+        <Button x:Name="ReturnButton" Content="Вернуться на главную форму" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,142,0" VerticalAlignment="Top" Height="25" Width="175" Click="ReturnButton_Click" Background="#FFE2CAAC"/>
+
+        <!-- Форма входа -->
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="179" Width="221">
+            <Label Content="Введите логин" HorizontalAlignment="Center"/>
+            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Center" TextWrapping="Wrap" Width="186" Height="27" Background="#FFE2CAAC"/>
+            <Label Content="Введите пароль" HorizontalAlignment="Center"/>
+            <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Center" Width="186" PasswordChar="●" Height="28" Background="#FFE2CAAC"/>
+            <Separator Height="15" Background="Transparent"/>
+            <Button x:Name="LoginButton" Content="Войти" Height="21" Width="86" Click="LoginButton_Click" Background="#FFE2CAAC"/>
+        </StackPanel>
+    </Grid>
+</Window>

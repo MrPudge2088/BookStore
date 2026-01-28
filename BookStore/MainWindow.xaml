@@ -1,0 +1,100 @@
+﻿<Window x:Class="BookStore.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" Background="#FFFFD198">
+    <Window.Resources>
+        <local:AmountConvert x:Key="AmountConvert"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFE2CAAC"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Верхняя шапка -->
+            <RowDefinition Height="*"/>
+            <!-- Основная область -->
+            <RowDefinition Height="Auto"/>
+            <!-- Нижняя панель -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <!-- Левая сторона -->
+            <ColumnDefinition Width="Auto"/>
+            <!-- Правая сторона -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Логотип и название секции -->
+        <Label Content="Каталог" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+
+        <!-- Список книг -->
+
+
+        <!-- Кнопка добавления в корзину -->
+        <Button Template="{DynamicResource ButtonTemplate1}" x:Name="CartButton" Content="Добавить в корзину" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="34" Width="195" IsEnabled="False" Click="CartButton_Click" Background="#FFE2CAAC"/>
+
+        <!-- Кнопки регистрации и входа -->
+        <DockPanel HorizontalAlignment="Right" Width="300" Grid.Row="0" Grid.Column="0">
+            <Button x:Name="LoginButton" Content="Войти" Height="26" Width="130" Click="LoginButton_Click" Background="#FFE2CAAC"/>
+            <Button x:Name="RegisterButton" Content="Регистрация" Height="26" Width="130" Click="RegisterButton_Click" Background="#FFE2CAAC"/>
+        </DockPanel>
+        <ListBox x:Name="BookListBox" Grid.Row="1" ItemsSource="{Binding BookList}" Background="#FFE2CAAC" Margin="10,10,10,48" SelectionChanged="BookListBox_SelectionChanged">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontSize="16" FontStyle="Normal" FontWeight="Bold"/>
+                            <DockPanel Margin="80,0,0,0">
+                                <TextBlock Text="{Binding AuthorNavigation.Name}"/>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding AuthorNavigation.Surname}"/>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding AuthorNavigation.Fathername}"/>
+                            </DockPanel>
+                            <TextBlock Text="{Binding Genre}" Margin="80,0,0,0"/>
+                            <TextBlock Text="   "/>
+                            <TextBlock Text="{Binding Description}"/>
+                            <TextBlock Text="{Binding StorageNavigation.Amount, Converter={StaticResource AmountConvert}}" HorizontalAlignment="Right" Margin="0,10,80,10" FontSize="16"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
